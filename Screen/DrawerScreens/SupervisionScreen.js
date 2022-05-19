@@ -1,23 +1,19 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import {SafeAreaView, View, Text, TextInput, Image} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import COLORS from '../../consts/color';
-import STYLES from '../../styles/index';
-import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import {SafeAreaView, View, Text} from 'react-native';
 
-const Control = ({navigation}) => {
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
+import COLORS from '../../consts/color';
+import {ScrollView} from 'react-native-gesture-handler';
+
+const SupervisionScreen = ({navigation}) => {
   return (
     <SafeAreaView
-      style={{paddingHorizontal: 20, flex: 1, backgroundColor: COLORS.white}}>
+      style={{paddingHorizontal: 20, flex: 1, backgroundColor: COLORS.picker}}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={{flexDirection: 'row', marginTop: 40}}>
-          <Text style={{fontWeight: 'bold', fontSize: 22, color: COLORS.dark}}>
-          supervising
-          </Text>
-        </View>
 
-        <View style={{marginTop: 70}}>
+        <View style={{marginTop: 40}}>
           <Text style={{fontSize: 27, fontWeight: 'bold', color: COLORS.dark}}>
             Welcome,  Moez 
           </Text>
@@ -30,18 +26,18 @@ const Control = ({navigation}) => {
               size={20}
             />
           <Text style={{fontSize: 27, fontWeight: 'bold', color: COLORS.dark}}>
-             Temperature : 22°c
+             Motor : On
           </Text>
         </View>
 
         <View style={{marginTop: 20}}>
             <Icon
-              name="mail-outline"
+              name="car-brake-low-pressure"
               color={COLORS.light}
               size={20}
             />
             <Text style={{fontSize: 27, fontWeight: 'bold', color: COLORS.dark}}>
-            Presion : 5 bar
+            Vanne : Off
             </Text>
         </View>
 
@@ -50,4 +46,4 @@ const Control = ({navigation}) => {
   );
 };
 
-export default Control;
+export default SupervisionScreen;
