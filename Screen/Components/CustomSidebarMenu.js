@@ -2,7 +2,7 @@
 // https://aboutreact.com/react-native-login-and-signup/
 
 // Import React and Component
-import React from 'react';
+import React, {useEffect,useState} from 'react';
 import {View, Text, Alert, StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient'
 
@@ -15,15 +15,45 @@ import {
 import AsyncStorage from '@react-native-community/async-storage';
 
 const CustomSidebarMenu = (props) => {
+  const [first_name, setfirst_name] = useState('');
+  const [last_name, setlast_name] = useState('');
+  const getUserData = () => {
+
+    fetch('http://192.168.1.36:8000/user/', {
+      method: 'GET',
+      headers: {
+        //Header Defination
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+      },
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        //Hide Loader
+        console.log(responseJson);
+        setfirst_name(responseJson.first_name)
+        setlast_name(responseJson.last_name)
+
+        }
+      )
+      .catch((error) => {
+        console.log('3');
+
+      });
+  };
+
+useEffect(()=>{
+  getUserData();
+},[]);
   return (
     <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#F8E2CF', '#FDF6F0']}  style={stylesSidebar.sideMenuContainer} >
       <View style={stylesSidebar.profileHeader}>
         <View style={stylesSidebar.profileHeaderPicCircle}>
-          <Text style={{fontSize: 25, color: '#7D5A50'}}>
-            {'Flen ben foulen'.charAt(0)}
+        <Text style={{fontSize: 25, color: '#7D5A50'}}>
+           {first_name.charAt(0)}
           </Text>
         </View>
-        <Text style={stylesSidebar.profileHeaderText}>Flen ben foulen</Text>
+        <Text style={stylesSidebar.profileHeaderText1}>{last_name}</Text>
+        <Text style={stylesSidebar.profileHeaderText2}>{first_name}</Text>
       </View>
       <View style={stylesSidebar.profileHeaderLine} />
 
@@ -85,10 +115,17 @@ const stylesSidebar = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  profileHeaderText: {
+  profileHeaderText1: {
     color: '#7D5A50',
     alignSelf: 'center',
-    paddingHorizontal: 10,
+    paddingLeft: 20,
+    fontWeight: 'bold',
+    fontSize:17
+  },
+  profileHeaderText2: {
+    color: '#7D5A50',
+    alignSelf: 'center',
+    paddingLeft: 5,
     fontWeight: 'bold',
     fontSize:17
   },

@@ -29,7 +29,7 @@ const SplashScreen = ({navigation}) => {
         source={require('../Image/logoapp.png')}
         style={{width : 160,height : 140, resizeMode: 'stretch', }}
       />
-<Text style={styles.text}>  By <Text style={styles.blod}>DHCsys</Text> </Text>
+<Text style={styles.text}>  By <Text style={styles.blod}>IMSR</Text> </Text>
    <ActivityIndicator
         animating={animating}
         color="#7097ab"

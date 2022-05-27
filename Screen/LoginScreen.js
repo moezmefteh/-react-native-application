@@ -1,7 +1,4 @@
-// Example of Splash, Login and Sign Up in React Native
-// https://aboutreact.com/react-native-login-and-signup/
 
-// Import React and Component
 import React, {useState, createRef} from 'react';
 import {
   StyleSheet,
@@ -39,7 +36,7 @@ const LoginScreen = ({navigation}) => {
       return;
     }
     setLoading(true);
-    let dataToSend = {user_email: user, user_password: userPassword};
+    let dataToSend = {username: user, password: userPassword};
     let formBody = [];
     for (let key in dataToSend) {
       let encodedKey = encodeURIComponent(key);
@@ -48,7 +45,7 @@ const LoginScreen = ({navigation}) => {
     }
     formBody = formBody.join('&');
 
-    fetch('https://aboutreact.herokuapp.com/login.php', {
+    fetch('http://192.168.1.36:8000/login/', {
       method: 'POST',
       body: formBody,
       headers: {
@@ -62,14 +59,14 @@ const LoginScreen = ({navigation}) => {
         setLoading(false);
         console.log(responseJson);
         // If server response message same as Data Matched
-        if (responseJson.status == 1) {
+        if (responseJson.access !== null) {
           AsyncStorage.setItem('user_id', user);
           console.log(AsyncStorage.getItem('user_id'));
           navigation.replace('DrawerNavigationRoutes');
         } else {
-          AsyncStorage.setItem('user_id', user);
-          console.log(AsyncStorage.getItem('user_id'));
-          navigation.replace('DrawerNavigationRoutes');
+          console.log(responseJson.detail);
+          alert(responseJson.detail);
+
         }
       })
       .catch((error) => {
@@ -153,7 +150,7 @@ const LoginScreen = ({navigation}) => {
             <Text
               style={styles.registerTextStyle}
             >
-              <Text style={styles.text}><Text style={styles.blod}>Pas encore de compte ?</Text>  vous êtes intéressé, contacter rapidement notre service administratif <Text style={styles.blod}>DHCsys</Text> </Text>
+              <Text style={styles.text}><Text style={styles.blod}>Pas encore de compte ?</Text>  vous êtes intéressé, contacter rapidement notre service administratif <Text style={styles.blod}>IMSR</Text> </Text>
             </Text>
           </KeyboardAvoidingView>
         </View>

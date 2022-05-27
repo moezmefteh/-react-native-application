@@ -1,44 +1,85 @@
-// Example of Splash, Login and Sign Up in React Native
-// https://aboutreact.com/react-native-login-and-signup/
 
-// Import React and Component
-import React from 'react';
+import React, {useEffect,useState} from 'react';
 import {View, Text, SafeAreaView} from 'react-native';
-
+import COLORS from '../../consts/color';
 const HomeScreen = () => {
+  const [first_name, setfirst_name] = useState('');
+  const [last_name, setlast_name] = useState('');
+  const [cin, setcin] = useState('');
+  const [email, setemail] = useState('');
+  const [poste, setposte] = useState('');
+  const [tel, settel] = useState('');
+
+  const getUser = () => {
+
+    fetch('http://192.168.1.36:8000/user/', {
+      method: 'GET',
+      headers: {
+        //Header Defination
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+      },
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        //Hide Loader
+        console.log(responseJson);
+        setfirst_name(responseJson.first_name)
+        setlast_name(responseJson.last_name)
+        setcin(responseJson.cin)
+        setemail(responseJson.email)
+        setposte(responseJson.poste)
+        settel(responseJson.tel)
+
+        }
+      )
+      .catch((error) => {
+        console.log('3');
+        setLoading(false);
+      });
+  };
+
+useEffect(()=>{
+  getUser();
+},[]);
   return (
     <SafeAreaView style={{flex: 1,   backgroundColor: '#FDF6F0',}}>
-      <View style={{flex: 1, padding: 16}}>
-        <View
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
+      <View style={{flex: 1, padding:4}}>
+        <View>
           <Text
             style={{
               fontSize: 20,
-              textAlign: 'center',
-              marginBottom : 16,
+              margin:15,
+              fontWeight: 'bold', 
+              color: COLORS.dark
             }}>
-            {'\n\n'}
-            This is the Home Screen
+            {first_name}
+            
           </Text>
         </View>
-        <Text
-          style={{
-            fontSize: 18,
-            textAlign: 'center',
-            color: 'grey',
-          }}>
-        </Text>
-        <Text
-          style={{
-            fontSize: 16,
-            textAlign: 'center',
-            color: 'grey',
-          }}>
-        </Text>
+        <View>
+          <Text
+            style={{
+              fontSize: 20,
+              marginLeft:15,
+              fontWeight: 'bold', 
+              color: COLORS.dark
+            }}>
+            
+            {last_name}
+          </Text>
+        </View>
+        <View>
+          <Text
+            style={{
+              fontSize: 20,
+              marginLeft:15,
+              fontWeight: 'bold', 
+              color: COLORS.dark
+            }}>
+            
+            {poste}
+          </Text>
+        </View>
       </View>
     </SafeAreaView>
   );
