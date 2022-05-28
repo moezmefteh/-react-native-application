@@ -1,7 +1,4 @@
-// Example of Splash, Login and Sign Up in React Native
-// https://aboutreact.com/react-native-login-and-signup/
 
-// Import React
 import React from 'react';
 
 // Import Navigators from React Navigation
@@ -10,10 +7,10 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 
 // Import Screens
 import HomeScreen from './DrawerScreens/HomeScreen';
-import SettingsScreen from './DrawerScreens/SettingScreen';
+import SettingsScreenAdmin from './DrawerScreens/SettingScreenAdmin';
 import CustomSidebarMenu from './Components/CustomSidebarMenu';
 import NavigationDrawerHeader from './Components/NavigationDrawerHeader';
-import ControlScreen from './DrawerScreens/ControlScreen';
+import ControlScreenIng from './DrawerScreens/ControlScreenIng';
 import SupervisionScreen from './DrawerScreens/SupervisionScreen';
 
 const Stack = createStackNavigator();
@@ -68,10 +65,10 @@ const SupervisionScreenStack = ({navigation}) => {
     </Stack.Navigator>
   );
 };
-const ControlScreenStack = ({navigation}) => {
+const ControlScreenIngStack = ({navigation}) => {
   return (
     <Stack.Navigator
-      initialRouteName="ControlScreen"
+      initialRouteName="ControlScreenIng"
       screenOptions={{
         headerLeft : () => (
           <NavigationDrawerHeader navigationProps={navigation} />
@@ -85,8 +82,8 @@ const ControlScreenStack = ({navigation}) => {
         },
       }}>
       <Stack.Screen
-        name="ControlScreen"
-        component={ControlScreen}
+        name="ControlScreenIng"
+        component={ControlScreenIng}
         options={{
           title: 'Control', //Set Header Title
         }}
@@ -95,10 +92,10 @@ const ControlScreenStack = ({navigation}) => {
   );
 };
 
-const SettingScreenStack = ({navigation}) => {
+const SettingScreenAdminStack = ({navigation}) => {
   return (
     <Stack.Navigator
-      initialRouteName="SettingsScreen"
+      initialRouteName="SettingsScreenAdmin"
       screenOptions={{
         headerLeft : () => (
           <NavigationDrawerHeader navigationProps={navigation} />
@@ -112,8 +109,8 @@ const SettingScreenStack = ({navigation}) => {
         },
       }}>
       <Stack.Screen
-        name="SettingsScreen"
-        component={SettingsScreen}
+        name="SettingsScreenAdmin"
+        component={SettingsScreenAdmin}
         options={{
           title: 'Settings', //Set Header Title
         }}
@@ -122,7 +119,7 @@ const SettingScreenStack = ({navigation}) => {
   );
 };
 
-const DrawerNavigatorRoutes = (props) => {
+const DrawerNavigatorRoutesIng = (props) => {
   return (
     <Drawer.Navigator
   
@@ -153,18 +150,18 @@ const DrawerNavigatorRoutes = (props) => {
       />
 
       <Drawer.Screen
-        name="ControlScreenStack"
+        name="ControlScreenIngStack"
         options={{drawerLabel: 'Control'}}
-        component={ControlScreenStack}
+        component={ControlScreenIngStack}
       />
 
       <Drawer.Screen
-        name="SettingScreenStack"
+        name="SettingScreenAdminStack"
         options={{drawerLabel: 'Settings'}}
-        component={SettingScreenStack}
+        component={SettingScreenAdminStack}
       />
     </Drawer.Navigator>
   );
 };
 
-export default DrawerNavigatorRoutes;
+export default DrawerNavigatorRoutesIng;

@@ -22,6 +22,7 @@ const LoginScreen = ({navigation}) => {
   const [userPassword, setUserPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errortext, setErrortext] = useState('');
+  //const [poste, setposte] = useState('');
 
   const passwordInputRef = createRef();
 
@@ -32,11 +33,12 @@ const LoginScreen = ({navigation}) => {
       return;
     }
     if (!userPassword) {
-      alert('Veuillez remplir votre mot de passe');
+      alert('Please fill in your password');
       return;
     }
     setLoading(true);
     let dataToSend = {username: user, password: userPassword};
+    console.log(dataToSend)
     let formBody = [];
     for (let key in dataToSend) {
       let encodedKey = encodeURIComponent(key);
@@ -45,7 +47,7 @@ const LoginScreen = ({navigation}) => {
     }
     formBody = formBody.join('&');
 
-    fetch('http://192.168.1.36:8000/login/', {
+    fetch('http://192.168.1.118:8000/login/', {
       method: 'POST',
       body: formBody,
       headers: {
@@ -59,20 +61,40 @@ const LoginScreen = ({navigation}) => {
         setLoading(false);
         console.log(responseJson);
         // If server response message same as Data Matched
-        if (responseJson.access !== null) {
-          AsyncStorage.setItem('user_id', user);
-          console.log(AsyncStorage.getItem('user_id'));
-          navigation.replace('DrawerNavigationRoutes');
+        if (responseJson.jwt !== undefined) {
+          
+          //console.log(AsyncStorage.getItem('user_id'));
+              if(responseJson.poste==="technicien"){
+                navigation.replace('DrawerNavigationRoutes');
+                AsyncStorage.setItem('username', user);
+                AsyncStorage.setItem('poste', "technicien");
+
+              }
+              else{
+                if(responseJson.poste==="ingenieur"){
+                  navigation.replace('DrawerNavigationRoutesIng');
+                  AsyncStorage.setItem('username', user);
+                  AsyncStorage.setItem('poste', "ingenieur");
+                }
+                else{
+                  if(responseJson.poste==="admin"){
+                    navigation.replace('DrawerNavigationRoutesAdmin');
+                    AsyncStorage.setItem('username', user);
+                    AsyncStorage.setItem('poste', "admin");
+                  }
+                }            
+              }
         } else {
           console.log(responseJson.detail);
           alert(responseJson.detail);
-
         }
       })
       .catch((error) => {
-        console.log('3');
+        //console.log('3');
+        alert("connexion failed !")
         setLoading(false);
       });
+      
   };
 
   return (

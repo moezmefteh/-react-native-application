@@ -7,7 +7,12 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../../consts/color';
 import {ScrollView} from 'react-native-gesture-handler';
 
-const ControlScreen = ({navigation}) => {
+const ControlScreenIng = ({navigation}) => {
+  const [isMotorEnabled, setIsMotorEnabled] = useState(false);
+  const toggleSwitchMotor = () => setIsMotorEnabled(previousState => !previousState);
+  const [isVanneEnabled, setIsVanneEnabled] = useState(false);
+  const toggleSwitchVanne = () => setIsVanneEnabled(previousState => !previousState);
+
   const [motor, setmotor] = useState('');
   const [vanne, setvanne] = useState('');
 
@@ -33,25 +38,6 @@ useEffect(()=>{
         alert("connexion failed !!")
         
       });
-      fetch('http://192.168.1.118:8000/MqttApp/vanne/last', {
-        method: 'GET',
-        headers: {
-          //Header Defination
-          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-        },
-      })
-        .then((response) => response.json())
-        .then((responseJson) => {
-          //Hide Loader
-          console.log(responseJson[responseJson.length - 1].value);
-          setvanne(responseJson[responseJson.length - 1].value)
-  
-          }
-        )
-        .catch((error) => {
-          alert("connexion failed !!")
-          
-        });
     };
     getSuperData();
   },[]);// @refresh reset
@@ -74,9 +60,18 @@ useEffect(()=>{
               size={20}
             />
           <Text style={{fontSize: 27, fontWeight: 'bold', color: COLORS.dark}}>
-             Motor : {motor}
+             Motor 
 
           </Text>
+          <View style={styles.container}>
+              <Switch
+                trackColor={{ false: "#767577", true: "#81b0ff" }}
+                thumbColor={isMotorEnabled ? "#f5dd4b" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                value={motor}
+                onValueChange={toggleSwitchMotor}
+              />
+          </View>
         </View>
 
         <View style={{marginTop: 20}}>
@@ -86,8 +81,18 @@ useEffect(()=>{
               size={20}
             />
             <Text style={{fontSize: 27, fontWeight: 'bold', color: COLORS.dark}}>
-            Vanne : {vanne}
+            Vanne 
             </Text>
+
+            <View style={styles.container}>
+              <Switch
+                trackColor={{ false: "#767577", true: "#81b0ff" }}
+                thumbColor={isVanneEnabled ? "#f5dd4b" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitchVanne}
+                value={isVanneEnabled}
+              />
+          </View>
         </View>
 
       </ScrollView>
@@ -96,5 +101,11 @@ useEffect(()=>{
   );
   
 };
-
-export default ControlScreen;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  }
+});
+export default ControlScreenIng;

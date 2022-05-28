@@ -11,7 +11,9 @@ import {createStackNavigator} from '@react-navigation/stack';
 import SplashScreen from './Screen/SplashScreen';
 import LoginScreen from './Screen/LoginScreen';
 import DrawerNavigationRoutes from './Screen/DrawerNavigationRoutes';
- 
+import DrawerNavigationRoutesIng from './Screen/DrawerNavigationRoutesIng';
+import DrawerNavigationRoutesAdmin from './Screen/DrawerNavigationRoutesAdmin';
+
 const Stack = createStackNavigator();
  
 const Auth = () => {
@@ -51,6 +53,18 @@ const App = () => {
         <Stack.Screen
           name="DrawerNavigationRoutes"
           component={DrawerNavigationRoutes}
+          // Hiding header for Navigation Drawer
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="DrawerNavigationRoutesIng"
+          component={DrawerNavigationRoutesIng}
+          // Hiding header for Navigation Drawer
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="DrawerNavigationRoutesAdmin"
+          component={DrawerNavigationRoutesAdmin}
           // Hiding header for Navigation Drawer
           options={{headerShown: false}}
         />

@@ -3,7 +3,7 @@ import React from 'react';
 import {View, Text, SafeAreaView} from 'react-native';
 import COLORS from '../../consts/color';
 
-const SettingsScreen = () => {
+const SettingsScreenAdmin = () => {
   return (
     <SafeAreaView style={{flex: 1,backgroundColor: '#FDF6F0'}}>
       <View style={{flex: 1, padding: 16}}>
@@ -20,8 +20,7 @@ const SettingsScreen = () => {
               marginBottom : 16,
               color: COLORS.dark
             }}>
-            {'\n\n'}
-            This is the Settings Screen
+            This is the Settings Screen Admin
           </Text>
         </View>
 
@@ -30,4 +29,4 @@ const SettingsScreen = () => {
   );
 };
 
-export default SettingsScreen;
+export default SettingsScreenAdmin;

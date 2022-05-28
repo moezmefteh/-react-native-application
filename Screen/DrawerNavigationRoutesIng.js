@@ -13,7 +13,7 @@ import HomeScreen from './DrawerScreens/HomeScreen';
 import SettingsScreen from './DrawerScreens/SettingScreen';
 import CustomSidebarMenu from './Components/CustomSidebarMenu';
 import NavigationDrawerHeader from './Components/NavigationDrawerHeader';
-import ControlScreen from './DrawerScreens/ControlScreen';
+import ControlScreenIng from './DrawerScreens/ControlScreenIng';
 import SupervisionScreen from './DrawerScreens/SupervisionScreen';
 
 const Stack = createStackNavigator();
@@ -68,10 +68,10 @@ const SupervisionScreenStack = ({navigation}) => {
     </Stack.Navigator>
   );
 };
-const ControlScreenStack = ({navigation}) => {
+const ControlScreenIngStack = ({navigation}) => {
   return (
     <Stack.Navigator
-      initialRouteName="ControlScreen"
+      initialRouteName="ControlScreenIng"
       screenOptions={{
         headerLeft : () => (
           <NavigationDrawerHeader navigationProps={navigation} />
@@ -85,8 +85,8 @@ const ControlScreenStack = ({navigation}) => {
         },
       }}>
       <Stack.Screen
-        name="ControlScreen"
-        component={ControlScreen}
+        name="ControlScreenIng"
+        component={ControlScreenIng}
         options={{
           title: 'Control', //Set Header Title
         }}
@@ -122,7 +122,7 @@ const SettingScreenStack = ({navigation}) => {
   );
 };
 
-const DrawerNavigatorRoutes = (props) => {
+const DrawerNavigatorRoutesIng = (props) => {
   return (
     <Drawer.Navigator
   
@@ -153,9 +153,9 @@ const DrawerNavigatorRoutes = (props) => {
       />
 
       <Drawer.Screen
-        name="ControlScreenStack"
+        name="ControlScreenIngStack"
         options={{drawerLabel: 'Control'}}
-        component={ControlScreenStack}
+        component={ControlScreenIngStack}
       />
 
       <Drawer.Screen
@@ -167,4 +167,4 @@ const DrawerNavigatorRoutes = (props) => {
   );
 };
 
-export default DrawerNavigatorRoutes;
+export default DrawerNavigatorRoutesIng;

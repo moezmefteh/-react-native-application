@@ -12,7 +12,7 @@ const HomeScreen = () => {
 
   const getUser = () => {
 
-    fetch('http://192.168.1.36:8000/user/', {
+    fetch('http://192.168.1.118:8000/user/', {
       method: 'GET',
       headers: {
         //Header Defination
@@ -33,7 +33,7 @@ const HomeScreen = () => {
         }
       )
       .catch((error) => {
-        console.log('3');
+        //console.log('3');
         setLoading(false);
       });
   };
@@ -78,6 +78,18 @@ useEffect(()=>{
             }}>
             
             {poste}
+          </Text>
+        </View>
+        <View>
+          <Text
+            style={{
+              fontSize: 20,
+              marginLeft:15,
+              fontWeight: 'bold', 
+              color: COLORS.dark
+            }}>
+            
+            {email}
           </Text>
         </View>
       </View>

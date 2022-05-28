@@ -17,8 +17,31 @@ const SplashScreen = ({navigation}) => {
       //Check if user_id is set or not
       //If not then send for Authentication
       //else send to Home Screen
-      AsyncStorage.getItem('user_id').then((value) =>
-        navigation.replace(value === null ? 'Auth' : 'DrawerNavigationRoutes'),
+      AsyncStorage.getItem('username').then((value) =>
+      {if(value!==null){
+        AsyncStorage.getItem('poste').then((value) =>{
+        if(value==="technicien" ){
+          navigation.replace('DrawerNavigationRoutes')
+        }else{
+          if(value==="ingenieur"){
+          navigation.replace('DrawerNavigationRoutesIng')
+          }
+          else{
+            if(value==="admin"){
+              navigation.replace('DrawerNavigationRoutesAdmin')
+              } 
+              else{
+                navigation.replace('Auth')
+              }
+          }
+        }
+      } );
+    }      
+    else{
+      navigation.replace('Auth')
+
+    }
+  }
       );
     }, 5000);
   }, []);
