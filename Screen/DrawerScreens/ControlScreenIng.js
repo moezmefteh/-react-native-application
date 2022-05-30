@@ -1,25 +1,58 @@
 import 'react-native-gesture-handler';
 import React, {useEffect,useState}  from 'react';
-import {SafeAreaView, View, Text,Switch,StyleSheet,TouchableOpacity,ImageBackground} from 'react-native';
+import {Switch,SafeAreaView, View, Text,StyleSheet,TouchableOpacity,TextInput} from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import COLORS from '../../consts/color';
 import {ScrollView} from 'react-native-gesture-handler';
 
+var valmotor = 'False';
 const ControlScreenIng = ({navigation}) => {
-  const [isMotorEnabled, setIsMotorEnabled] = useState(false);
-  const toggleSwitchMotor = () => setIsMotorEnabled(previousState => !previousState);
-  const [isVanneEnabled, setIsVanneEnabled] = useState(false);
-  const toggleSwitchVanne = () => setIsVanneEnabled(previousState => !previousState);
 
-  const [motor, setmotor] = useState('');
-  const [vanne, setvanne] = useState('');
+  const [motor, setmotor] = useState(false);
+  const toggleSwitchmotor = () => {
+    var today=new Date();
+    motor ? valmotor='False':valmotor='True';
+    fetch('http://192.168.1.66:8000/MqttApp/motor/last', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        pub_date: today,
+        value: valmotor,
+        cmdfromapp: '1'
+      })
+        });
+        
+  };
+
+  const [vanne, setvanne] = useState(false);
+  const toggleSwitchvanne = () => {
+    var today=new Date();
+    vanne ? valvanne='False':valvanne='True';
+    fetch('http://192.168.1.66:8000/MqttApp/vanne/last', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        pub_date: today,
+        value: valvanne,
+        cmdfromapp: '1'
+      })
+        });
+  };
 
 useEffect(()=>{
+  const interval = setInterval(() => {
+
   async function getSuperData () {
 
-    fetch('http://192.168.1.118:8000/MqttApp/motor/last', {
+    fetch('http://192.168.1.66:8000/MqttApp/motor/last', {
       method: 'GET',
       headers: {
         //Header Defination
@@ -28,19 +61,46 @@ useEffect(()=>{
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        //Hide Loader
-        console.log(responseJson[responseJson.length - 1].value);
-        setmotor(responseJson[responseJson.length - 1].value)
-
+        newmotor=(responseJson[responseJson.length - 1].value)==='True' ? true : false;
+        if(newmotor!=motor){
+          newmotor ? setmotor(true):setmotor(false);
         }
+      }
       )
       .catch((error) => {
         alert("connexion failed !!")
         
       });
+
+      fetch('http://192.168.1.66:8000/MqttApp/vanne/last', {
+        method: 'GET',
+        headers: {
+          //Header Defination
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+        },
+      })
+        .then((response) => response.json())
+        .then((responseJson) => {
+          newvanne=(responseJson[responseJson.length - 1].value)==='True' ? true : false;
+          if(newvanne!=vanne){
+            newvanne ? setvanne(true):setvanne(false);
+          }
+          //Hide Loader
+          //console.log(responseJson[responseJson.length - 1].value);
+          //(responseJson[responseJson.length - 1].value)==='True'?setvanne(true):setvanne(false);
+          }
+        )
+        .catch((error) => {
+          alert("connexion failed !!")
+          
+        });
     };
     getSuperData();
-  },[]);// @refresh reset
+  }, 1000);
+  return () => {
+    clearInterval(interval);
+  };
+  });
   
   return (
     <SafeAreaView
@@ -60,18 +120,16 @@ useEffect(()=>{
               size={20}
             />
           <Text style={{fontSize: 27, fontWeight: 'bold', color: COLORS.dark}}>
-             Motor 
+             Motor {String(motor)}
 
           </Text>
-          <View style={styles.container}>
-              <Switch
-                trackColor={{ false: "#767577", true: "#81b0ff" }}
-                thumbColor={isMotorEnabled ? "#f5dd4b" : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e"
-                value={motor}
-                onValueChange={toggleSwitchMotor}
-              />
-          </View>
+
+            <Switch
+              style={{ marginTop: 30 }}
+              onValueChange={toggleSwitchmotor}
+              value={motor}
+            />
+
         </View>
 
         <View style={{marginTop: 20}}>
@@ -81,18 +139,14 @@ useEffect(()=>{
               size={20}
             />
             <Text style={{fontSize: 27, fontWeight: 'bold', color: COLORS.dark}}>
-            Vanne 
+            Vanne {String(vanne)}
             </Text>
+            <Switch
+              style={{ marginTop: 30 }}
+              onValueChange={toggleSwitchvanne}
+              value={vanne}
+            />
 
-            <View style={styles.container}>
-              <Switch
-                trackColor={{ false: "#767577", true: "#81b0ff" }}
-                thumbColor={isVanneEnabled ? "#f5dd4b" : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitchVanne}
-                value={isVanneEnabled}
-              />
-          </View>
         </View>
 
       </ScrollView>
@@ -106,6 +160,20 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-  }
+  },
+  inputStyle: {
+    flex: 1,
+    color: 'white',
+    paddingLeft : 15,
+    paddingRight : 15,
+    borderWidth : 1,
+    borderRadius: 30,
+    borderColor: '#dadae8',
+  },
+  view: {
+    margin: 10,
+  },
 });
+
+
 export default ControlScreenIng;

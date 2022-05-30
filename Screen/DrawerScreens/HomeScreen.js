@@ -11,8 +11,9 @@ const HomeScreen = () => {
   const [tel, settel] = useState('');
 
   const getUser = () => {
+    const interval = setInterval(() => {
 
-    fetch('http://192.168.1.118:8000/user/', {
+    fetch('http://192.168.1.66:8000/user/', {
       method: 'GET',
       headers: {
         //Header Defination
@@ -36,6 +37,11 @@ const HomeScreen = () => {
         //console.log('3');
         setLoading(false);
       });
+      
+    }, 1000);
+    return () => {
+      clearInterval(interval);
+    };
   };
 
 useEffect(()=>{

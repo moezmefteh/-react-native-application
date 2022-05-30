@@ -12,10 +12,12 @@ const SupervisionScreen = ({navigation}) => {
   const [presion, setpresion] = useState('');
   const [temp, settemp] = useState('');
 
-useEffect(()=>{
+useEffect(() => {
+  const interval = setInterval(() => {
+
   async function getSuperData () {
 
-    fetch('http://192.168.1.118:8000/MqttApp/presion/last', {
+    fetch('http://192.168.1.66:8000/MqttApp/presion/last', {
       method: 'GET',
       headers: {
         //Header Defination
@@ -35,7 +37,7 @@ useEffect(()=>{
         
       });
       
-      fetch('http://192.168.1.118:8000/MqttApp/temp/last', {
+      fetch('http://192.168.1.66:8000/MqttApp/temp/last', {
         method: 'GET',
         headers: {
           //Header Defination
@@ -57,7 +59,12 @@ useEffect(()=>{
 
   };
   getSuperData();
-},[]);// @refresh reset
+
+}, 1000);
+return () => {
+  clearInterval(interval);
+};
+});
 
 return (
   <SafeAreaView

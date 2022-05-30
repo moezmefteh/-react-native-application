@@ -19,7 +19,7 @@ const CustomSidebarMenu = (props) => {
   const [last_name, setlast_name] = useState('');
   const getUserData = () => {
 
-    fetch('http://192.168.1.118:8000/user/', {
+    fetch('http://192.168.1.66:8000/user/', {
       method: 'GET',
       headers: {
         //Header Defination
