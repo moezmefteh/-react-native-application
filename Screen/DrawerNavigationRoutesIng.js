@@ -15,6 +15,7 @@ import CustomSidebarMenu from './Components/CustomSidebarMenu';
 import NavigationDrawerHeader from './Components/NavigationDrawerHeader';
 import ControlScreenIng from './DrawerScreens/ControlScreenIng';
 import SupervisionScreen from './DrawerScreens/SupervisionScreen';
+import HomeEditProfil from './DrawerScreens/HomeEditProfil';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -30,6 +31,22 @@ const HomeScreenStack = ({navigation}) => {
           headerLeft : () => (
             <NavigationDrawerHeader navigationProps={navigation} />
           ),
+          headerStyle: {
+            backgroundColor: '#FDF6F0', //Set Header color
+          },
+          headerTintColor: '#7D5A50', //Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold', //Set Header text style
+          },
+        }}
+      />
+            <Stack.Screen
+        name="HomeEditProfil"
+        component={HomeEditProfil}
+        options={{
+          title: 'Edit Profil', //Set Header Title
+
+
           headerStyle: {
             backgroundColor: '#FDF6F0', //Set Header color
           },

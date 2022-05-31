@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import COLORS from '../../consts/color';
 import {ScrollView} from 'react-native-gesture-handler';
+import { IPconf } from '../IPconf';
 
 var valmotor = 'False';
 const ControlScreenIng = ({navigation}) => {
@@ -14,7 +15,7 @@ const ControlScreenIng = ({navigation}) => {
   const toggleSwitchmotor = () => {
     var today=new Date();
     motor ? valmotor='False':valmotor='True';
-    fetch('http://192.168.1.66:8000/MqttApp/motor/last', {
+    fetch('http://'+IPconf+':8000/MqttApp/motor/last', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -33,7 +34,7 @@ const ControlScreenIng = ({navigation}) => {
   const toggleSwitchvanne = () => {
     var today=new Date();
     vanne ? valvanne='False':valvanne='True';
-    fetch('http://192.168.1.66:8000/MqttApp/vanne/last', {
+    fetch('http://'+IPconf+':8000/MqttApp/vanne/last', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -52,7 +53,7 @@ useEffect(()=>{
 
   async function getSuperData () {
 
-    fetch('http://192.168.1.66:8000/MqttApp/motor/last', {
+    fetch('http://'+IPconf+':8000/MqttApp/motor/last', {
       method: 'GET',
       headers: {
         //Header Defination
@@ -65,6 +66,7 @@ useEffect(()=>{
         if(newmotor!=motor){
           newmotor ? setmotor(true):setmotor(false);
         }
+        console.log(responseJson[responseJson.length - 1].value);
       }
       )
       .catch((error) => {
@@ -72,7 +74,7 @@ useEffect(()=>{
         
       });
 
-      fetch('http://192.168.1.66:8000/MqttApp/vanne/last', {
+      fetch('http://'+IPconf+':8000/MqttApp/vanne/last', {
         method: 'GET',
         headers: {
           //Header Defination
@@ -86,7 +88,7 @@ useEffect(()=>{
             newvanne ? setvanne(true):setvanne(false);
           }
           //Hide Loader
-          //console.log(responseJson[responseJson.length - 1].value);
+          console.log(responseJson[responseJson.length - 1].value);
           //(responseJson[responseJson.length - 1].value)==='True'?setvanne(true):setvanne(false);
           }
         )
@@ -104,12 +106,12 @@ useEffect(()=>{
   
   return (
     <SafeAreaView
-      style={{paddingHorizontal: 20, flex: 1, backgroundColor: COLORS.picker}}>
+      style={{paddingHorizontal: 20, flex: 1, backgroundColor: COLORS.white}}>
       <ScrollView showsVerticalScrollIndicator={false}>
 
         <View style={{marginTop: 40}}>
-          <Text style={{fontSize: 27, fontWeight: 'bold', color: COLORS.dark}}>
-            Welcome,  Moez 
+          <Text style={{fontSize: 20, color: COLORS.dark}}>
+          Welcome on the controlling screen, 
           </Text>
         </View>
 

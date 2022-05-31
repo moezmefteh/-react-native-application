@@ -4,7 +4,7 @@ import React from 'react';
 // Import Navigators from React Navigation
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-
+import { Icon } from 'react-native-vector-icons/MaterialIcons';
 // Import Screens
 import HomeScreen from './DrawerScreens/HomeScreen';
 import SettingsScreenAdmin from './DrawerScreens/SettingScreenAdmin';
@@ -12,6 +12,8 @@ import CustomSidebarMenu from './Components/CustomSidebarMenu';
 import NavigationDrawerHeader from './Components/NavigationDrawerHeader';
 import ControlScreenIng from './DrawerScreens/ControlScreenIng';
 import SupervisionScreen from './DrawerScreens/SupervisionScreen';
+import HomeEditProfil from './DrawerScreens/HomeEditProfil';
+import SettingEditProfil from './DrawerScreens/SettingEditProfil';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -36,7 +38,23 @@ const HomeScreenStack = ({navigation}) => {
           },
         }}
       />
+      <Stack.Screen
+        name="HomeEditProfil"
+        component={HomeEditProfil}
+        options={{
+          title: 'Edit Profil', //Set Header Title
+          headerStyle: {
+            backgroundColor: '#FDF6F0', //Set Header color
+          },
+          headerTintColor: '#7D5A50', //Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold', //Set Header text style
+          },
+        }}
+      />
+
     </Stack.Navigator>
+
   );
 };
 const SupervisionScreenStack = ({navigation}) => {
@@ -95,31 +113,44 @@ const ControlScreenIngStack = ({navigation}) => {
 const SettingScreenAdminStack = ({navigation}) => {
   return (
     <Stack.Navigator
-      initialRouteName="SettingsScreenAdmin"
-      screenOptions={{
-        headerLeft : () => (
-          <NavigationDrawerHeader navigationProps={navigation} />
-        ),
-        headerStyle: {
-          backgroundColor: '#FDF6F0', //Set Header color
-        },
-        headerTintColor: '#7D5A50', //Set Header text color
-        headerTitleStyle: {
-          fontWeight: 'bold', //Set Header text style
-        },
-      }}>
+      initialRouteName="SettingsScreenAdmin">
       <Stack.Screen
         name="SettingsScreenAdmin"
         component={SettingsScreenAdmin}
         options={{
           title: 'Settings', //Set Header Title
+          headerLeft : () => (
+            <NavigationDrawerHeader navigationProps={navigation} />
+          ),
+          headerStyle: {
+            backgroundColor: '#FDF6F0', //Set Header color
+          },
+          headerTintColor: '#7D5A50', //Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold', //Set Header text style
+          },
+        }}
+      />
+      <Stack.Screen
+        name="SettingEditProfil"
+        component={SettingEditProfil}
+        options={{
+          title: 'Edit user Profil',
+           //Set Header Title
+          headerStyle: {
+            backgroundColor: '#FDF6F0', //Set Header color
+          },
+          headerTintColor: '#7D5A50', //Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold', //Set Header text style
+          },
         }}
       />
     </Stack.Navigator>
   );
 };
 
-const DrawerNavigatorRoutesIng = (props) => {
+const DrawerNavigatorRoutesAdmin = (props) => {
   return (
     <Drawer.Navigator
   
@@ -164,4 +195,4 @@ const DrawerNavigatorRoutesIng = (props) => {
   );
 };
 
-export default DrawerNavigatorRoutesIng;
+export default DrawerNavigatorRoutesAdmin;

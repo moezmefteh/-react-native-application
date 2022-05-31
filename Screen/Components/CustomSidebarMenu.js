@@ -13,13 +13,14 @@ import {
 } from '@react-navigation/drawer';
 
 import AsyncStorage from '@react-native-community/async-storage';
+import { IPconf } from '../IPconf';
 
 const CustomSidebarMenu = (props) => {
   const [first_name, setfirst_name] = useState('');
   const [last_name, setlast_name] = useState('');
   const getUserData = () => {
 
-    fetch('http://192.168.1.66:8000/user/', {
+    fetch('http://'+IPconf +':8000/user/', {
       method: 'GET',
       headers: {
         //Header Defination
@@ -29,7 +30,7 @@ const CustomSidebarMenu = (props) => {
       .then((response) => response.json())
       .then((responseJson) => {
         //Hide Loader
-        console.log(responseJson);
+        console.log(responseJson.username);
         setfirst_name(responseJson.first_name)
         setlast_name(responseJson.last_name)
 
@@ -77,6 +78,16 @@ useEffect(()=>{
                 {
                   text: 'Confirm',
                   onPress: () => {
+                    fetch('http://'+IPconf +':8000/logout/', {
+                      method: 'POST',
+                      headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify({
+
+                      })
+                        });
                     AsyncStorage.clear();
                     props.navigation.replace('Auth');
                   },

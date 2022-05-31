@@ -16,6 +16,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import COLORS from '../consts/color';
 
 import Loader from './Components/Loader';
+import { IPconf } from './IPconf';
 
 const LoginScreen = ({navigation}) => {
   const [user, setUser] = useState('');
@@ -47,7 +48,7 @@ const LoginScreen = ({navigation}) => {
     }
     formBody = formBody.join('&');
 
-    fetch('http://192.168.1.66:8000/login/', {
+    fetch('http://'+IPconf+':8000/login/', {
       method: 'POST',
       body: formBody,
       headers: {

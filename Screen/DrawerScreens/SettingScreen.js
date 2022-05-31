@@ -5,7 +5,7 @@ import COLORS from '../../consts/color';
 
 const SettingsScreen = () => {
   return (
-    <SafeAreaView style={{flex: 1,backgroundColor: '#FDF6F0'}}>
+    <SafeAreaView style={{flex: 1,backgroundColor: COLORS.white}}>
       <View style={{flex: 1, padding: 16}}>
         <View
           style={{
