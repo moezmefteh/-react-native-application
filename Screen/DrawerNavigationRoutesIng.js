@@ -112,33 +112,6 @@ const ControlScreenIngStack = ({navigation}) => {
   );
 };
 
-const SettingScreenStack = ({navigation}) => {
-  return (
-    <Stack.Navigator
-      initialRouteName="SettingsScreen"
-      screenOptions={{
-        headerLeft : () => (
-          <NavigationDrawerHeader navigationProps={navigation} />
-        ),
-        headerStyle: {
-          backgroundColor: '#FDF6F0', //Set Header color
-        },
-        headerTintColor: '#7D5A50', //Set Header text color
-        headerTitleStyle: {
-          fontWeight: 'bold', //Set Header text style
-        },
-      }}>
-      <Stack.Screen
-        name="SettingsScreen"
-        component={SettingsScreen}
-        options={{
-          title: 'Settings', //Set Header Title
-        }}
-      />
-    </Stack.Navigator>
-  );
-};
-
 const DrawerNavigatorRoutesIng = (props) => {
   return (
     <Drawer.Navigator
@@ -175,11 +148,6 @@ const DrawerNavigatorRoutesIng = (props) => {
         component={ControlScreenIngStack}
       />
 
-      <Drawer.Screen
-        name="SettingScreenStack"
-        options={{drawerLabel: 'Settings'}}
-        component={SettingScreenStack}
-      />
     </Drawer.Navigator>
   );
 };

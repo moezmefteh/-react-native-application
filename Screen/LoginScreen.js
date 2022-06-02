@@ -14,6 +14,7 @@ import {
 
 import AsyncStorage from '@react-native-community/async-storage';
 import COLORS from '../consts/color';
+import axios from 'axios';
 
 import Loader from './Components/Loader';
 import { IPconf } from './IPconf';
@@ -38,6 +39,7 @@ const LoginScreen = ({navigation}) => {
       return;
     }
     setLoading(true);
+    /*
     let dataToSend = {username: user, password: userPassword};
     console.log(dataToSend)
     let formBody = [];
@@ -47,29 +49,27 @@ const LoginScreen = ({navigation}) => {
       formBody.push(encodedKey + '=' + encodedValue);
     }
     formBody = formBody.join('&');
-
+      
+    
     fetch('http://'+IPconf+':8000/login/', {
       method: 'POST',
       body: formBody,
       headers: {
-        //Header Defination
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
       },
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        //Hide Loader
+
         setLoading(false);
         console.log(responseJson);
-        // If server response message same as Data Matched
+
         if (responseJson.jwt !== undefined) {
-          
-          //console.log(AsyncStorage.getItem('user_id'));
               if(responseJson.poste==="technicien"){
                 navigation.replace('DrawerNavigationRoutes');
                 AsyncStorage.setItem('username', user);
-                AsyncStorage.setItem('poste', "technicien");
-
+                AsyncStorage.setItem('poste',"technicien");
               }
               else{
                 if(responseJson.poste==="ingenieur"){
@@ -91,10 +91,61 @@ const LoginScreen = ({navigation}) => {
         }
       })
       .catch((error) => {
-        //console.log('3');
+        console.log('3');
         alert("connexion failed !")
         setLoading(false);
       });
+*/
+      const LoginJson = { "username": String(user), "password":String(userPassword)};
+      console.log(LoginJson)
+      
+      axios({
+        headers: { 'Content-Type': 'application/json'},
+        method: 'post',
+        url:'http://'+IPconf+':8000/login/',
+        data: LoginJson,
+      })
+      
+      .then((responseJson) => {
+
+        setLoading(false);
+        console.log(responseJson.data);
+
+        if (responseJson.data.jwt !== undefined) {
+              if(responseJson.data.poste==="technicien"){
+                navigation.replace('DrawerNavigationRoutes');
+                AsyncStorage.setItem('username', user);
+                AsyncStorage.setItem('poste',"technicien");
+              }
+              else{
+                if(responseJson.data.poste==="ingenieur"){
+                  navigation.replace('DrawerNavigationRoutesIng');
+                  AsyncStorage.setItem('username', user);
+                  AsyncStorage.setItem('poste', "ingenieur");
+                }
+                else{
+                  if(responseJson.data.poste==="admin"){
+                    navigation.replace('DrawerNavigationRoutesAdmin');
+                    AsyncStorage.setItem('username', user);
+                    AsyncStorage.setItem('poste', "admin");
+                  }
+                }            
+              }
+        } 
+      })
+      .catch((error) => {
+        if(error.response.data !== undefined){
+          setLoading(false);          
+          alert(error.response.data.detail);
+            }
+          else {
+            setTimeout(() => {
+              setLoading(false);
+            alert("connexion error...");
+
+             }, 1000);
+       
+      }})
       
   };
 

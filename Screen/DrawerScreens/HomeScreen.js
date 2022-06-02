@@ -4,6 +4,8 @@ import {ScrollView,View, Text, SafeAreaView,StyleSheet,ActivityIndicator, Toucha
 import COLORS from '../../consts/color';
 import { IPconf } from '../IPconf';
 import AsyncStorage from '@react-native-community/async-storage';
+import { color } from 'react-native-reanimated';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const HomeScreen = ({navigation}) => {
 
@@ -30,6 +32,16 @@ const HomeScreen = ({navigation}) => {
     </SafeAreaView>)
 
     const UserData = () =>(
+      <SafeAreaView
+      style={{paddingHorizontal: 20, flex: 1, backgroundColor: COLORS.white}}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+
+      <View style={{marginTop: 40}}>
+          <Text style={{fontSize: 20, color: COLORS.dark, fontWeight: 'bold'}}>
+          Welcome on the home screen,
+          </Text>
+        </View>
+
       <SafeAreaView style={{flex: 1,   backgroundColor: '#ffffff',marginBottom :10}}>
       <View style={styles.container}>
         <View style={{
@@ -46,25 +58,25 @@ const HomeScreen = ({navigation}) => {
             backgroundColor: 'white',
             justifyContent: 'flex-start',
         }}>
-        <Text style={{ alignContent:'center',alignItems:'center', fontWeight: 'bold', color:'#455156', fontSize: 20 }}>{username}</Text>
-            <View style={{ flexDirection: 'row', marginTop : 5 }}>
+        <Text style={{ alignContent:'center',alignItems:'center', fontWeight: 'bold', color:COLORS.secondary, fontSize: 20 }}>{username}</Text>
+            <View style={{ flexDirection: 'row', marginTop : 10 }}>
             <Text style={styles.prefix}>user :</Text>
             <Text style={styles.content}>{first_name} {last_name}</Text>
         </View>
-        <View style={{ flexDirection: 'row', marginTop : 5 }}>
+        <View style={{ flexDirection: 'row', marginTop : 10 }}>
             <Text style={styles.prefix}>cin :</Text>
             <Text style={styles.content}>{cin}</Text>
         </View>
 
-        <View style={{ flexDirection: 'row', marginTop : 5 }}>
+        <View style={{ flexDirection: 'row', marginTop : 10 }}>
             <Text style={styles.prefix}>Poste :</Text>
             <Text style={styles.content}>{poste}</Text>
         </View>
-        <View style={{ flexDirection: 'row', marginTop : 5 }}>
+        <View style={{ flexDirection: 'row', marginTop : 10 }}>
             <Text style={styles.prefix}>Telephone :</Text>
             <Text style={styles.content}>{tel}</Text>
         </View>
-        <View style={{ flexDirection: 'row', marginTop : 5 }}>
+        <View style={{ flexDirection: 'row', marginTop : 10 }}>
             <Text style={styles.prefix}>Email :</Text>
             <Text style={styles.content}>{email}</Text>
         </View>
@@ -75,6 +87,9 @@ const HomeScreen = ({navigation}) => {
         </View>
     </View>
     </SafeAreaView>
+    </ScrollView>
+    </SafeAreaView>
+
     )
 
   const getUser = () => {
@@ -110,7 +125,8 @@ const HomeScreen = ({navigation}) => {
   };
 
   useEffect(()=>{
-      
+    const interval = setInterval(() => {
+
       getUser();
 
       if (username!=''){         
@@ -121,8 +137,14 @@ const HomeScreen = ({navigation}) => {
           AsyncStorage.setItem('tel', tel);
           AsyncStorage.setItem('cin', cin);
           AsyncStorage.setItem('email', email);
+          AsyncStorage.setItem('poste', poste);
+
         } 
       else{setIsLoading(true);}
+    }, 1000);
+    return () => {
+      clearInterval(interval);
+    };
           });   
 
   return (
@@ -141,19 +163,23 @@ const styles = StyleSheet.create({
       justifyContent: 'flex-start',
   },
   prefix: {
-      fontWeight: '300',
-      color: '#455156',
-      marginRight : 5
-  },
+    fontWeight: '300',
+    color: COLORS.dark,
+    marginRight : 5,
+    fontSize:18
+
+},
   content: {
-      fontWeight: '600',
-      color: '#455156'
+      fontWeight: 'bold',
+      color: COLORS.dark,
+      fontSize:18
+
   },
   commandButton: {
     padding: 12,
     borderRadius: 40,
     marginLeft :"50%",
-    backgroundColor: '#495D7D',
+    backgroundColor: COLORS.tertiary,
     alignItems: 'center',
     marginTop : 15,
   },
