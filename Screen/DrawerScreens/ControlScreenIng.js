@@ -24,7 +24,7 @@ const ControlScreenIng = ({navigation}) => {
     }
     var today=addHours(1);
 
-    motor ? valmotor='False':valmotor='True';
+    motor ? valmotor='0':valmotor='1';
     fetch('http://'+IPconf+':8000/MqttApp/motor/last', {
       method: 'POST',
       headers: {
@@ -50,7 +50,7 @@ const ControlScreenIng = ({navigation}) => {
       return date;
     }
     var today=addHours(1);
-    vanne ? valvanne='False':valvanne='True';
+    vanne ? valvanne='0':valvanne='1';
     fetch('http://'+IPconf+':8000/MqttApp/vanne/last', {
       method: 'POST',
       headers: {

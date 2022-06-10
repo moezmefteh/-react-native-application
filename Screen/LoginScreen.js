@@ -224,7 +224,7 @@ const LoginScreen = ({navigation}) => {
             <Text
               style={styles.registerTextStyle}
             >
-              <Text style={styles.text}><Text style={styles.blod}>Pas encore de compte ?</Text>  vous êtes intéressé, contacter rapidement notre service administratif <Text style={styles.blod}>IMSR</Text> </Text>
+              <Text style={styles.text}><Text style={styles.blod}>No account yet?</Text> you are interested, quickly contact our administrative department <Text style={styles.blod}>IMSR</Text> </Text>
             </Text>
           </KeyboardAvoidingView>
         </View>
